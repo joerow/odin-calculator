@@ -1,3 +1,48 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: azure;
+}
+
 h1 {
-  color: blue;
+  color: rgb(240, 137, 214);
+  font-family: "ZCOOL QingKe HuangYou", cursive;
+}
+
+#calculator-container {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-template-rows: repeat(6, auto);
+  width: 500px;
+  height: 500px;
+  gap: 2px;
+  border: 2px solid black;
+  margin: 5px;
+  padding: 5px;
+  background-color: rgba(240, 137, 214, 0.26);
+}
+
+#calculator-screen {
+  font-family: "ZCOOL QingKe HuangYou", cursive;
+  font-size: xx-large;
+  display: grid;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  align-content: center;
+  justify-content: right;
+  background-color: rgb(172, 172, 172);
+}
+
+#calculator-digits {
+}
+
+#fn-equals {
+  grid-column-start: 3;
+  grid-column-end: 5;
+  grid-row-start: 6;
+  grid-row-end: 7;
 }
