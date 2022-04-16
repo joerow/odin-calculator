@@ -1,33 +1,32 @@
 const add = function (a, b) {
-  let result = parseInt(a) + parseInt(b);
-  console.log("add fucntion ran");
-  return result;
+  return a + b;
 };
 
 const subtract = function (a, b) {
-  let subtract = a - b;
-  return subtract;
+  return a - b;
 };
 
 const multiply = function (a, b) {
-  let product = a * b;
-  return product;
+  return a * b;
 };
 
 const divide = function (a, b) {
-  let product = a / b;
-  return product;
+  return a / b;
 };
 
 const operate = function (operator, a, b) {
-  console.log("operate called");
   let result = operator(a, b);
   display.textContent = result;
 };
 
+const reset = function () {
+  displayValue = "";
+  num1 = "";
+  display.textContent = displayValue;
+};
+
 let displayValue = "";
 let num1 = 0;
-let num2 = NaN;
 let fncalled = false;
 display = document.querySelector("#calculator-screen");
 display.textContent = "8008135";
@@ -51,55 +50,27 @@ const numButtons = document.querySelectorAll("button[data-key]");
     })
 );
 
-const fnButtons = document.querySelectorAll("button[data-action]");
-[...fnButtons].forEach(
-  (btn) =>
-    (btn.onclick = function () {
-      let operator = btn.getAttribute("data-action");
-      console.log(operator + " key pressed");
-      if (num1 == 0) {
-        num1 = parseInt(displayValue);
-        console.log("num 1 set to " + num1);
+const minusButton = document.querySelector("button#fn-minus");
 
-        displayValue = 0;
-        console.log("display value reset");
-        display.textContent = displayValue;
-      } else {
-        switch (operator) {
-          case "add":
-            console.log("case add");
-            if (displayValue != 0 && num1 != 0) {
-              return operate(add, num1, displayValue);
-            }
-            break;
-          //   case operator == "operate" && displayValue != 0 && num1 != 0:
-          //     console.log("case1");
-          //     operate(operator, num1, displayValue);
-          //     break;
-          //   // case operator == "operate" && displayValue == "":
-          //   //   console.log("case2");
-          //   //   display.textContent = num1;
-          //   //   break;
-          //   case operator === "add" && num1 != 0 && displayValue != 0:
-          //     console.log("case3");
-          //     console.log(
-          //       "add with num1(" +
-          //         num1 +
-          //         ") and display value(" +
-          //         displayValue +
-          //         ")"
-          //     );
-          //     operate(operator, num1, displayValue);
-          //     break;
-          //   //   case :
-          //   //   break;
-          default:
-            console.log("default switch");
-            displayValue = 0;
-            console.log("display value reset");
-            display.textContent = displayValue;
-            break;
-        }
-      }
-    })
-);
+const plusButton = document.querySelector("button#fn-plus");
+
+const multiplyButton = document.querySelector("button#fn-multiply");
+
+const divideButton = document.querySelector("button#fn-divide");
+
+const resetButton = document.querySelector("button#fn-reset");
+
+const deleteButton = document.querySelector("button#fn-delete");
+deleteButton.onclick = function () {
+  console.log("delete button pressed");
+  displayValueString = displayValue.toString();
+  if (displayValueString.length == 1) {
+    displayValue = 0;
+  } else {
+    displayValue = parseInt(displayValueString.slice(0, -1));
+  }
+  console.log("displayValue set to " + displayValue);
+  display.textContent = displayValue;
+};
+
+const equalsButton = document.querySelector("button#fn-equals");
