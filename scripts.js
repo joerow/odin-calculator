@@ -60,6 +60,7 @@ const fnButtons = document.querySelectorAll("button[data-action]");
       if (num1 == 0) {
         num1 = parseInt(displayValue);
         console.log("num 1 set to " + num1);
+
         displayValue = 0;
         console.log("display value reset");
         display.textContent = displayValue;
