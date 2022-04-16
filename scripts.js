@@ -20,16 +20,19 @@ const operate = function (operator, a, b) {
 };
 
 const reset = function () {
-  displayValue = "";
-  num1 = "";
+  displayValue = 0;
+  actionDisplay.textContent = "";
   display.textContent = displayValue;
 };
 
-let displayValue = "";
+let displayValue = 0;
 let num1 = 0;
 let fncalled = false;
 display = document.querySelector("#calculator-screen");
 display.textContent = "8008135";
+
+let actionDisplay = document.querySelector("#calculator-fnscreen");
+actionDisplay.textContent = "type something";
 
 const numButtons = document.querySelectorAll("button[data-key]");
 [...numButtons].forEach(
@@ -60,11 +63,20 @@ const divideButton = document.querySelector("button#fn-divide");
 
 const resetButton = document.querySelector("button#fn-reset");
 
+const mathButtons = document.querySelectorAll("button.mathfn-button");
+[...mathButtons].forEach(
+  (btn) =>
+    (btn.onclick = function () {
+      if (actionDisplay == "") {
+      }
+    })
+);
+
 const deleteButton = document.querySelector("button#fn-delete");
 deleteButton.onclick = function () {
   console.log("delete button pressed");
   displayValueString = displayValue.toString();
-  if (displayValueString.length == 1) {
+  if (displayValueString.length === 1 || displayValueString === "NaN") {
     displayValue = 0;
   } else {
     displayValue = parseInt(displayValueString.slice(0, -1));
