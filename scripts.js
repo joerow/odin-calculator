@@ -29,6 +29,7 @@ const reset = function () {
   displayValue = 0;
   actionDisplay.textContent = "";
   display.textContent = displayValue;
+  toEval = [];
 };
 
 let toEval = [];
@@ -79,6 +80,9 @@ const multiplyButton = document.querySelector("button#fn-multiply");
 const divideButton = document.querySelector("button#fn-divide");
 
 const resetButton = document.querySelector("button#fn-reset");
+resetButton.onclick = function () {
+  reset();
+};
 
 // const mathButtons = document.querySelectorAll("button.mathfn-button");
 // [...mathButtons].forEach(
