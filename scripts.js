@@ -35,10 +35,10 @@ const reset = function () {
 let toEval = [];
 let displayValue = 0;
 let num1 = 0;
+let currentOperand = null;
 
 display = document.querySelector("#calculator-screen");
 display.textContent = "0";
-
 actionDisplay = document.querySelector("#calculator-fnscreen");
 actionDisplay.textContent = "type something";
 
@@ -59,20 +59,7 @@ const numButtons = document.querySelectorAll("button[data-key]");
 const minusButton = document.querySelector("button#fn-minus");
 
 const plusButton = document.querySelector("button#fn-plus");
-plusButton.onclick = function () {
-  if (toEval.length === 2) {
-    actionDisplay.textContent = toEval[1] + " + " + displayValue;
-    operate(toEval[0], toEval[1], displayValue);
-    displayValue = 0;
-    display.textContent = displayValue;
-  } else {
-    toEval[0] = add;
-    toEval[1] = displayValue;
-    actionDisplay.textContent = toEval[1] + " + ";
-    displayValue = 0;
-    display.textContent = displayValue;
-  }
-};
+plusButton.onclick = function () {};
 
 const multiplyButton = document.querySelector("button#fn-multiply");
 
@@ -82,15 +69,6 @@ const resetButton = document.querySelector("button#fn-reset");
 resetButton.onclick = function () {
   reset();
 };
-
-// const mathButtons = document.querySelectorAll("button.mathfn-button");
-// [...mathButtons].forEach(
-//   (btn) =>
-//     (btn.onclick = function () {
-//       if (actionDisplay == "") {
-//       }
-//     })
-// );
 
 const deleteButton = document.querySelector("button#fn-delete");
 deleteButton.onclick = function () {
@@ -104,8 +82,4 @@ deleteButton.onclick = function () {
 };
 
 const equalsButton = document.querySelector("button#fn-equals");
-equalsButton.onclick = function () {
-  result = operate(toEval[0], toEval[1], displayValue);
-  actionDisplay.textContent += displayValue;
-  toEval = [];
-};
+equalsButton.onclick = function () {};
