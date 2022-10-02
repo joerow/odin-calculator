@@ -29,7 +29,7 @@ let displayValue = 0;
 let num1 = 0;
 let fncalled = false;
 display = document.querySelector("#calculator-screen");
-display.textContent = "8008135";
+display.textContent = "0";
 
 let actionDisplay = document.querySelector("#calculator-fnscreen");
 actionDisplay.textContent = "type something";
