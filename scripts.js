@@ -22,25 +22,24 @@ const operate = function (operand, a, b) {
 
 const setDisplay = function (a) {
   displayValue = a;
-  display.textContent = a;
+  display.textContent = displayValue;
 };
 
 const reset = function () {
   displayValue = 0;
-  actionDisplay.textContent = "";
+  actionDisplay.textContent = "Type Something";
   display.textContent = displayValue;
   toEval = [];
 };
 
 let toEval = [];
-
 let displayValue = 0;
 let num1 = 0;
-let fncalled = false;
+
 display = document.querySelector("#calculator-screen");
 display.textContent = "0";
 
-let actionDisplay = document.querySelector("#calculator-fnscreen");
+actionDisplay = document.querySelector("#calculator-fnscreen");
 actionDisplay.textContent = "type something";
 
 const numButtons = document.querySelectorAll("button[data-key]");
@@ -62,8 +61,8 @@ const minusButton = document.querySelector("button#fn-minus");
 const plusButton = document.querySelector("button#fn-plus");
 plusButton.onclick = function () {
   if (toEval.length === 2) {
+    actionDisplay.textContent = toEval[1] + " + " + displayValue;
     operate(toEval[0], toEval[1], displayValue);
-    actionDisplay.textContent = toEval[1] + " + ";
     displayValue = 0;
     display.textContent = displayValue;
   } else {
