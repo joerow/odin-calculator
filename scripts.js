@@ -14,23 +14,46 @@ const divide = function (a, b) {
   return parseInt(a) / parseInt(b);
 };
 
+const getSymbol = function (operand) {
+  let symbol = "";
+  switch (operand) {
+    case add:
+      symbol = " + ";
+      break;
+    case minus:
+      symbol = " - ";
+      break;
+    default:
+      symbol = " no symbol ";
+  }
+  return symbol;
+};
+
 const operate = function (operand, a, b) {
   result = operand(a, b);
-  actionDisplay.textContent = a + " " + result;
-  display.textContent = displayValue;
-  toEval[1] = result;
-  toEval[2] = null;
+  if (b === 0 && displayValue === 0) {
+    actionDisplay.textContent = toEval[1] + getSymbol(operand);
+    console.log("thisone");
+    setDisplay(0);
+  } else {
+    actionDisplay.textContent =
+      toEval[1] + getSymbol(operand) + toEval[2] + " = " + result;
+    console.log("that one");
+    console.log(result);
+    setDisplay(result);
+    toEval[1] = result;
+    toEval[2] = null;
+  }
 };
 
 const setDisplay = function (a) {
   displayValue = a;
-  display.textContent = displayValue;
+  display.textContent = a;
 };
 
 const reset = function () {
-  displayValue = 0;
+  setDisplay(0);
   actionDisplay.textContent = "type something";
-  display.textContent = displayValue;
   toEval = [];
   currentOperand = null;
 };
@@ -39,6 +62,7 @@ let toEval = [null, null, null];
 let displayValue = 0;
 let num1 = 0;
 let currentOperand = null;
+let result = null;
 
 display = document.querySelector("#calculator-screen");
 display.textContent = "0";
@@ -68,14 +92,12 @@ plusButton.onclick = function () {
     toEval[1] = displayValue;
     console.log(toEval[1]);
     actionDisplay.textContent = toEval[1] + " + ";
-    displayValue = 0;
-    displayValue.textContent = 0;
+    setDisplay(0);
   }
-  if (toEval[1] !== null) {
+  if (toEval[1] != null) {
     toEval[2] = displayValue;
     operate(...toEval);
-    displayValue = 0;
-    displayValue.textContent = 0;
+    setDisplay(0);
   }
 };
 
