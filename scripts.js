@@ -39,6 +39,8 @@ const operate = function (operand, a, b) {
     actionDisplay.textContent =
       toEval[1] + getSymbol(operand) + toEval[2] + " = " + result;
     console.log("that one");
+
+    // this is the problem section I think. Why is it not setting the display value to the result.
     console.log(result);
     setDisplay(result);
     toEval[1] = result;
