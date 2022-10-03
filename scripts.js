@@ -20,7 +20,7 @@ const getSymbol = function (operand) {
     case add:
       symbol = " + ";
       break;
-    case minus:
+    case subtract:
       symbol = " - ";
       break;
     default:
@@ -87,6 +87,20 @@ const numButtons = document.querySelectorAll("button[data-key]");
 );
 
 const minusButton = document.querySelector("button#fn-minus");
+minusButton.onclick = function () {
+  toEval[0] = subtract;
+  if (toEval[1] == null) {
+    toEval[1] = displayValue;
+    console.log(toEval[1]);
+    actionDisplay.textContent = toEval[1] + " - ";
+    setDisplay(0);
+  }
+  if (toEval[1] != null) {
+    toEval[2] = displayValue;
+    operate(...toEval);
+    setDisplay(0);
+  }
+};
 
 const plusButton = document.querySelector("button#fn-plus");
 plusButton.onclick = function () {
