@@ -23,6 +23,12 @@ const getSymbol = function (operand) {
     case subtract:
       symbol = " - ";
       break;
+    case multiply:
+      symbol = " x ";
+      break;
+    case divide:
+      symbol = " / ";
+      break;
     default:
       symbol = " no symbol ";
   }
@@ -39,11 +45,8 @@ const operate = function (operand, a, b) {
     actionDisplay.textContent =
       toEval[1] + getSymbol(operand) + toEval[2] + " = " + result;
     console.log("that one");
-
-    // this is the problem section I think. Why is it not setting the
-    // display value to the result.
-    console.log(result);
     setDisplay(result);
+    toEval[0] = null;
     toEval[1] = result;
     toEval[2] = null;
   }
@@ -88,27 +91,71 @@ const numButtons = document.querySelectorAll("button[data-key]");
 
 const minusButton = document.querySelector("button#fn-minus");
 minusButton.onclick = function () {
-  toEval[0] = subtract;
-  if (toEval[1] == null) {
-    toEval[1] = displayValue;
-    console.log(toEval[1]);
-    actionDisplay.textContent = toEval[1] + " - ";
-    setDisplay(0);
-  }
-  if (toEval[1] != null) {
-    toEval[2] = displayValue;
-    operate(...toEval);
-    setDisplay(0);
+  if (toEval[0] != null) {
+    if (toEval[1] == null) {
+      toEval[1] = displayValue;
+      console.log(toEval[1]);
+      actionDisplay.textContent = toEval[1] + " - ";
+      setDisplay(0);
+    }
+    if (toEval[1] != null) {
+      toEval[2] = displayValue;
+      operate(...toEval);
+      setDisplay(0);
+    }
+  } else {
+    toEval[0] = subtract;
+    if (toEval[1] == null) {
+      toEval[1] = displayValue;
+      console.log(toEval[1]);
+      actionDisplay.textContent = toEval[1] + " - ";
+      setDisplay(0);
+    }
+    if (toEval[1] != null) {
+      toEval[2] = displayValue;
+      operate(...toEval);
+      setDisplay(0);
+    }
   }
 };
 
 const plusButton = document.querySelector("button#fn-plus");
 plusButton.onclick = function () {
-  toEval[0] = add;
+  if (toEval[0] != null) {
+    if (toEval[1] == null) {
+      toEval[1] = displayValue;
+      console.log(toEval[1]);
+      actionDisplay.textContent = toEval[1] + " + ";
+      setDisplay(0);
+    }
+    if (toEval[1] != null) {
+      toEval[2] = displayValue;
+      operate(...toEval);
+      setDisplay(0);
+    }
+  } else {
+    toEval[0] = add;
+    if (toEval[1] == null) {
+      toEval[1] = displayValue;
+      console.log(toEval[1]);
+      actionDisplay.textContent = toEval[1] + " + ";
+      setDisplay(0);
+    }
+    if (toEval[1] != null) {
+      toEval[2] = displayValue;
+      operate(...toEval);
+      setDisplay(0);
+    }
+  }
+};
+
+const multiplyButton = document.querySelector("button#fn-multiply");
+multiplyButton.onclick = function () {
+  toEval[0] = multiply;
   if (toEval[1] == null) {
     toEval[1] = displayValue;
     console.log(toEval[1]);
-    actionDisplay.textContent = toEval[1] + " + ";
+    actionDisplay.textContent = toEval[1] + " x ";
     setDisplay(0);
   }
   if (toEval[1] != null) {
@@ -118,9 +165,21 @@ plusButton.onclick = function () {
   }
 };
 
-const multiplyButton = document.querySelector("button#fn-multiply");
-
 const divideButton = document.querySelector("button#fn-divide");
+divideButton.onclick = function () {
+  toEval[0] = divide;
+  if (toEval[1] == null) {
+    toEval[1] = displayValue;
+    console.log(toEval[1]);
+    actionDisplay.textContent = toEval[1] + " / ";
+    setDisplay(0);
+  }
+  if (toEval[1] != null) {
+    toEval[2] = displayValue;
+    operate(...toEval);
+    setDisplay(0);
+  }
+};
 
 const resetButton = document.querySelector("button#fn-reset");
 resetButton.onclick = function () {
@@ -139,4 +198,7 @@ deleteButton.onclick = function () {
 };
 
 const equalsButton = document.querySelector("button#fn-equals");
-equalsButton.onclick = function () {};
+equalsButton.onclick = function () {
+  toEval[2] = displayValue;
+  operate(...toEval);
+};
