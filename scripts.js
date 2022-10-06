@@ -47,7 +47,7 @@ const getSymbol = function (operand) {
 };
 
 const operate = function (operand, a, b) {
-  result = operand(a, b);
+  result = operand(a, b).toFixed(2);
   if (equalspressed === true) {
     if (b === 0 && displayValue === 0) {
       actionDisplay.textContent = result;
@@ -170,7 +170,7 @@ divideButton.onclick = function () {
   }
   if (toEval[1] == null && ans == null) {
     toEval[1] = displayValue;
-    actionDisplay.textContent = toEval[1] + " x ";
+    actionDisplay.textContent = toEval[1] + " / ";
     setDisplay(0);
   }
   toEval[2] = displayValue;
