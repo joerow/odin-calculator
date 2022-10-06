@@ -5,24 +5,25 @@ let currentOperand = null;
 let result = null;
 let ans = null;
 let equalspressed = false;
+let decimalinput = false;
 
 const add = function (a, b) {
-  return parseInt(a) + parseInt(b);
+  return parseFloat(a) + parseFloat(b);
 };
 
 const subtract = function (a, b) {
-  return parseInt(a) - parseInt(b);
+  return parseFloat(a) - parseFloat(b);
 };
 
 const multiply = function (a, b) {
-  return parseInt(a) * parseInt(b);
+  return parseFloat(a) * parseFloat(b);
 };
 
 const divide = function (a, b) {
-  if (parseInt(b) === 0) {
+  if (parseFloat(b) === 0) {
     return "naughty";
   }
-  return parseInt(a) / parseInt(b);
+  return parseFloat(a) / parseFloat(b);
 };
 
 const getSymbol = function (operand) {
@@ -47,7 +48,10 @@ const getSymbol = function (operand) {
 };
 
 const operate = function (operand, a, b) {
-  result = operand(a, b).toFixed(2);
+  result = operand(a, b);
+  if (typeof result === "number") {
+    result = result.toFixed(2);
+  }
   if (equalspressed === true) {
     if (b === 0 && displayValue === 0) {
       actionDisplay.textContent = result;
@@ -100,8 +104,13 @@ const numButtons = document.querySelectorAll("button[data-key]");
   (btn) =>
     (btn.onclick = function () {
       if (displayValue === 0) {
-        displayValue = btn.getAttribute("data-key");
-        display.textContent = displayValue;
+        if (btn.getAttribute("data-key") === "." && decimalinput === false) {
+          display.textContent = "0.";
+          decimalinput = true;
+        } else {
+          displayValue = btn.getAttribute("data-key");
+          display.textContent = displayValue;
+        }
       } else {
         displayValue += btn.getAttribute("data-key");
         display.textContent = displayValue;
@@ -183,7 +192,7 @@ deleteButton.onclick = function () {
   if (displayValueString.length === 1 || displayValueString === "NaN") {
     displayValue = 0;
   } else {
-    displayValue = parseInt(displayValueString.slice(0, -1));
+    displayValue = parseFloat(displayValueString.slice(0, -1));
   }
   display.textContent = displayValue;
 };
