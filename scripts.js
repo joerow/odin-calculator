@@ -41,7 +41,7 @@ const operate = function (operand, a, b) {
     actionDisplay.textContent = toEval[1] + getSymbol(operand);
     console.log("thisone");
     setDisplay(0);
-  } else {
+  } else if (ans === null) {
     actionDisplay.textContent =
       toEval[1] + getSymbol(operand) + toEval[2] + " = " + result;
     console.log("that one");
@@ -62,6 +62,8 @@ const reset = function () {
   actionDisplay.textContent = "type something";
   toEval = [];
   currentOperand = null;
+  result = null;
+  ans = null;
 };
 
 let toEval = [null, null, null];
@@ -69,6 +71,7 @@ let displayValue = 0;
 let num1 = 0;
 let currentOperand = null;
 let result = null;
+let ans = null;
 
 display = document.querySelector("#calculator-screen");
 display.textContent = "0";
@@ -88,6 +91,35 @@ const numButtons = document.querySelectorAll("button[data-key]");
       }
     })
 );
+
+const plusButton = document.querySelector("button#fn-plus");
+plusButton.onclick = function () {
+  if (toEval[0] != null) {
+    if (toEval[1] == null) {
+      toEval[1] = displayValue;
+      console.log(toEval[1]);
+      actionDisplay.textContent = toEval[1] + " + ";
+      setDisplay(0);
+    }
+    if (toEval[1] != null) {
+      toEval[2] = displayValue;
+      operate(...toEval);
+      setDisplay(0);
+    }
+  } else {
+    toEval[0] = add;
+    if (toEval[1] == null) {
+      toEval[1] = displayValue;
+      actionDisplay.textContent = toEval[1] + " + ";
+      setDisplay(0);
+    }
+    if (toEval[1] != null) {
+      toEval[2] = displayValue;
+      operate(...toEval);
+      setDisplay(0);
+    }
+  }
+};
 
 const minusButton = document.querySelector("button#fn-minus");
 minusButton.onclick = function () {
@@ -109,36 +141,6 @@ minusButton.onclick = function () {
       toEval[1] = displayValue;
       console.log(toEval[1]);
       actionDisplay.textContent = toEval[1] + " - ";
-      setDisplay(0);
-    }
-    if (toEval[1] != null) {
-      toEval[2] = displayValue;
-      operate(...toEval);
-      setDisplay(0);
-    }
-  }
-};
-
-const plusButton = document.querySelector("button#fn-plus");
-plusButton.onclick = function () {
-  if (toEval[0] != null) {
-    if (toEval[1] == null) {
-      toEval[1] = displayValue;
-      console.log(toEval[1]);
-      actionDisplay.textContent = toEval[1] + " + ";
-      setDisplay(0);
-    }
-    if (toEval[1] != null) {
-      toEval[2] = displayValue;
-      operate(...toEval);
-      setDisplay(0);
-    }
-  } else {
-    toEval[0] = add;
-    if (toEval[1] == null) {
-      toEval[1] = displayValue;
-      console.log(toEval[1]);
-      actionDisplay.textContent = toEval[1] + " + ";
       setDisplay(0);
     }
     if (toEval[1] != null) {
