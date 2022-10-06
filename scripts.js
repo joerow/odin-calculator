@@ -1,3 +1,11 @@
+let toEval = [null, null, null];
+let displayValue = 0;
+let num1 = 0;
+let currentOperand = null;
+let result = null;
+let ans = null;
+let equalspressed = false;
+
 const add = function (a, b) {
   return parseInt(a) + parseInt(b);
 };
@@ -11,6 +19,9 @@ const multiply = function (a, b) {
 };
 
 const divide = function (a, b) {
+  if (parseInt(b) === 0) {
+    return "naughty";
+  }
   return parseInt(a) / parseInt(b);
 };
 
@@ -37,18 +48,31 @@ const getSymbol = function (operand) {
 
 const operate = function (operand, a, b) {
   result = operand(a, b);
-  if (b === 0 && displayValue === 0) {
-    actionDisplay.textContent = toEval[1] + getSymbol(operand);
-    console.log("thisone");
-    setDisplay(0);
-  } else if (ans === null) {
-    actionDisplay.textContent =
-      toEval[1] + getSymbol(operand) + toEval[2] + " = " + result;
-    console.log("that one");
-    setDisplay(result);
-    toEval[0] = null;
-    toEval[1] = result;
-    toEval[2] = null;
+  if (equalspressed === true) {
+    if (b === 0 && displayValue === 0) {
+      actionDisplay.textContent = result;
+      setDisplay(0);
+    } else {
+      actionDisplay.textContent = result;
+      setDisplay(0);
+      ans = result;
+      toEval[0] = operand;
+      toEval[1] = ans;
+      toEval[2] = null;
+    }
+    equalspressed = false;
+  } else {
+    if (b === 0 && displayValue === 0) {
+      actionDisplay.textContent = toEval[1] + getSymbol(operand);
+      setDisplay(0);
+    } else {
+      actionDisplay.textContent = result + getSymbol(operand);
+      setDisplay(0);
+      ans = result;
+      toEval[0] = operand;
+      toEval[1] = ans;
+      toEval[2] = null;
+    }
   }
 };
 
@@ -65,13 +89,6 @@ const reset = function () {
   result = null;
   ans = null;
 };
-
-let toEval = [null, null, null];
-let displayValue = 0;
-let num1 = 0;
-let currentOperand = null;
-let result = null;
-let ans = null;
 
 display = document.querySelector("#calculator-screen");
 display.textContent = "0";
@@ -94,98 +111,70 @@ const numButtons = document.querySelectorAll("button[data-key]");
 
 const plusButton = document.querySelector("button#fn-plus");
 plusButton.onclick = function () {
-  if (toEval[0] != null) {
-    if (toEval[1] == null) {
-      toEval[1] = displayValue;
-      console.log(toEval[1]);
-      actionDisplay.textContent = toEval[1] + " + ";
-      setDisplay(0);
-    }
-    if (toEval[1] != null) {
-      toEval[2] = displayValue;
-      operate(...toEval);
-      setDisplay(0);
-    }
+  if (toEval[0] != add && toEval[0] != null) {
+    operate(toEval[0], toEval[1], displayValue);
+    toEval[0] = add;
   } else {
     toEval[0] = add;
-    if (toEval[1] == null) {
-      toEval[1] = displayValue;
-      actionDisplay.textContent = toEval[1] + " + ";
-      setDisplay(0);
-    }
-    if (toEval[1] != null) {
-      toEval[2] = displayValue;
-      operate(...toEval);
-      setDisplay(0);
-    }
   }
+  if (toEval[1] == null && ans == null) {
+    toEval[1] = displayValue;
+    actionDisplay.textContent = toEval[1] + " + ";
+    setDisplay(0);
+  }
+  toEval[2] = displayValue;
+  operate(...toEval);
 };
 
 const minusButton = document.querySelector("button#fn-minus");
 minusButton.onclick = function () {
-  if (toEval[0] != null) {
-    if (toEval[1] == null) {
-      toEval[1] = displayValue;
-      console.log(toEval[1]);
-      actionDisplay.textContent = toEval[1] + " - ";
-      setDisplay(0);
-    }
-    if (toEval[1] != null) {
-      toEval[2] = displayValue;
-      operate(...toEval);
-      setDisplay(0);
-    }
+  if (toEval[0] != subtract && toEval[0] != null) {
+    operate(toEval[0], toEval[1], displayValue);
+    toEval[0] = subtract;
   } else {
     toEval[0] = subtract;
-    if (toEval[1] == null) {
-      toEval[1] = displayValue;
-      console.log(toEval[1]);
-      actionDisplay.textContent = toEval[1] + " - ";
-      setDisplay(0);
-    }
-    if (toEval[1] != null) {
-      toEval[2] = displayValue;
-      operate(...toEval);
-      setDisplay(0);
-    }
   }
+  if (toEval[1] == null && ans == null) {
+    toEval[1] = displayValue;
+    actionDisplay.textContent = toEval[1] + " - ";
+    setDisplay(0);
+  }
+  toEval[2] = displayValue;
+  operate(...toEval);
 };
 
 const multiplyButton = document.querySelector("button#fn-multiply");
 multiplyButton.onclick = function () {
-  toEval[0] = multiply;
-  if (toEval[1] == null) {
+  if (toEval[0] != multiply && toEval[0] != null) {
+    operate(toEval[0], toEval[1], displayValue);
+    toEval[0] = multiply;
+  } else {
+    toEval[0] = multiply;
+  }
+  if (toEval[1] == null && ans == null) {
     toEval[1] = displayValue;
-    console.log(toEval[1]);
     actionDisplay.textContent = toEval[1] + " x ";
     setDisplay(0);
   }
-  if (toEval[1] != null) {
-    toEval[2] = displayValue;
-    operate(...toEval);
-    setDisplay(0);
-  }
+  toEval[2] = displayValue;
+  operate(...toEval);
 };
 
 const divideButton = document.querySelector("button#fn-divide");
 divideButton.onclick = function () {
-  toEval[0] = divide;
-  if (toEval[1] == null) {
+  if (toEval[0] != divide && toEval[0] != null) {
+    operate(toEval[0], toEval[1], displayValue);
+    toEval[0] = divide;
+  } else {
+    toEval[0] = divide;
+  }
+  if (toEval[1] == null && ans == null) {
     toEval[1] = displayValue;
-    console.log(toEval[1]);
-    actionDisplay.textContent = toEval[1] + " / ";
+    actionDisplay.textContent = toEval[1] + " x ";
     setDisplay(0);
   }
-  if (toEval[1] != null) {
-    toEval[2] = displayValue;
-    operate(...toEval);
-    setDisplay(0);
-  }
-};
-
-const resetButton = document.querySelector("button#fn-reset");
-resetButton.onclick = function () {
-  reset();
+  toEval[2] = displayValue;
+  operate(...toEval);
 };
 
 const deleteButton = document.querySelector("button#fn-delete");
@@ -201,6 +190,18 @@ deleteButton.onclick = function () {
 
 const equalsButton = document.querySelector("button#fn-equals");
 equalsButton.onclick = function () {
-  toEval[2] = displayValue;
-  operate(...toEval);
+  equalspressed = true;
+  if ((toEval[0] != null) & (toEval[1] != null)) {
+    toEval[2] = displayValue;
+    operate(...toEval);
+  } else {
+    toEval[1] = displayValue;
+    actionDisplay.textContent = toEval[1];
+    setDisplay(0);
+  }
+};
+
+const resetButton = document.querySelector("button#fn-reset");
+resetButton.onclick = function () {
+  reset();
 };
